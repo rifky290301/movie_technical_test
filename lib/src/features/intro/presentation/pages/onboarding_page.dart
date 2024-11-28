@@ -1,13 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_technical_test/main.dart';
-import 'package:movie_technical_test/src/core/helper/ui_theme_extention.dart';
-import 'package:movie_technical_test/src/core/router/app_page.dart';
-import 'package:movie_technical_test/src/core/router/app_routes.dart';
-import 'package:movie_technical_test/src/core/styles/app_gradients.dart';
+import '../../../../core/helper/ui_theme_extention.dart';
+import '../../../../core/router/app_routes.dart';
+import '../../../../core/styles/app_gradients.dart';
 
 import '../../../../core/utils/constant/app_constants.dart';
 

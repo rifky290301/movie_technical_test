@@ -6,5 +6,6 @@ class LocalStorageConstants {
   static const String user = "user";
   static const String movie = "movie";
   static const String favoriteMovie = "favorite_movie";
+  static const String favoriteMovieId = "favorite_movie_id";
   static const String haveSeenOnboarding = "have_seen_onboarding";
 }

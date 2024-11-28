@@ -17,6 +17,10 @@ class GetMoviesUpcommingHomeEvent extends HomeEvent {
   const GetMoviesUpcommingHomeEvent({this.page});
 }
 
+class GetGenreHomeEvent extends HomeEvent {
+  const GetGenreHomeEvent();
+}
+
 class GetSearchMoviesHomeEvent extends HomeEvent {
   final SearchMovieModel query;
   const GetSearchMoviesHomeEvent({

@@ -61,4 +61,16 @@ class HomeRepositoryImpl extends AbstracHomeRepository {
       return Left(CancelTokenFailure(e.message, e.statusCode));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Genre>>> getAllGenre() async {
+    try {
+      final result = await homeApi.getAllGenre();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, e.statusCode));
+    } on CancelTokenException catch (e) {
+      return Left(CancelTokenFailure(e.message, e.statusCode));
+    }
+  }
 }

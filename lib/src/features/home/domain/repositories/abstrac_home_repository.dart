@@ -10,4 +10,5 @@ abstract class AbstracHomeRepository {
   Future<Either<Failure, DetailMovieModel>> getDetailMovie(String params);
   Future<Either<Failure, MovieModel>> getSearchMovies(SearchMovieModel params);
   Future<Either<Failure, MovieModel>> getMoviesUpcomming(String params);
+  Future<Either<Failure, List<Genre>>> getAllGenre();
 }

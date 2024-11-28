@@ -7,4 +7,5 @@ abstract class AbstracHomeApi {
   Future<DetailMovieModel> getDetailMovie(String params);
   Future<MovieModel> getSearchMovies(SearchMovieModel params);
   Future<MovieModel> getMoviesUpcomming(String params);
+  Future<List<Genre>> getAllGenre();
 }

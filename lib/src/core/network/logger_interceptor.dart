@@ -53,8 +53,7 @@ class LoggerInterceptor extends Interceptor {
     }
     if (requestBody) {
       logPrint('data:');
-      // _printAll(options.data);
-      inspect(options.data);
+      _printAll(options.data);
     }
     logPrint('');
     return super.onRequest(options, handler);
@@ -93,7 +92,8 @@ class LoggerInterceptor extends Interceptor {
     }
     if (responseBody) {
       logPrint('Response Text:');
-      _printAll(response.toString());
+      // _printAll(response.toString());
+      inspect(response);
     }
     logPrint('');
   }

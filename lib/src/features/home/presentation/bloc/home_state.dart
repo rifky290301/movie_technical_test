@@ -34,3 +34,13 @@ class HomeFailure extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class GenreLoading extends HomeState {}
+
+class GenresSuccess extends HomeState {
+  final List<Genre> listGenre;
+  const GenresSuccess(this.listGenre);
+
+  @override
+  List<Object> get props => [listGenre];
+}
