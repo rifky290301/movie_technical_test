@@ -16,7 +16,7 @@ class HomeImplApi extends AbstracHomeApi {
   @override
   Future<MovieModel> getMoviesNowPlaying(String params) async {
     try {
-      final result = await dio.get(
+      final Response result = await dio.get(
         '/movie/now_playing',
         queryParameters: {
           'language': 'en-US',

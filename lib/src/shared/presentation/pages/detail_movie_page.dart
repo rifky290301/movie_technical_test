@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_technical_test/src/core/styles/app_colors.dart';
 import '../../../core/helper/datetime_format.dart';
 import '../../../core/utils/constant/app_constants.dart';
 import '../../../core/utils/injections.dart';
@@ -60,12 +61,9 @@ class DetailMoviePage extends StatelessWidget {
                       bloc: bloc,
                       listener: (context, state) {
                         if (state is FavoriteLoadingDetail) {
-                          logger.info('favorite loading');
                         } else if (state is SuccesGetIdFavorite) {
                           listIdMovieFavorite = state.listIdFavorite;
-                          logger.info('favorite sucess id favorite $listIdMovieFavorite ---');
                         } else if (state is FavoriteSuccessDetail) {
-                          logger.info('favorite sucesss');
                         } else if (state is FavoriteFailure) {
                           logger.shout(state.error);
                         }

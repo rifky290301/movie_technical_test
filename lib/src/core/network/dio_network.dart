@@ -48,6 +48,8 @@ class DioNetwork {
         }
         options.headers = headers;
         options.headers['Authorization'] = 'Bearer ${NetworkConstant.bearerToken}';
+        options.sendTimeout = const Duration(seconds: 5);
+        options.connectTimeout = const Duration(seconds: 10);
         appAPI.options.headers = headers;
         return r.next(options);
       },
@@ -74,6 +76,8 @@ class DioNetwork {
         options.headers = headers;
         options.headers['Authorization'] = 'Bearer ${NetworkConstant.bearerToken}';
         retryAPI.options.headers = headers;
+        options.sendTimeout = const Duration(seconds: 5);
+        options.connectTimeout = const Duration(seconds: 10);
 
         return r.next(options);
       },

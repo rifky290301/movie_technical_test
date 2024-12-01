@@ -1,3 +1,7 @@
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:movie_technical_test/src/shared/services/app_notifier_service.dart';
+
 import '../../shared/data/datasources/app_shared_prefs.dart';
 import '../../shared/domain/entities/language_enum.dart';
 import '../utils/injections.dart';
@@ -11,7 +15,10 @@ class Helper {
 
   /// Get and set dark mode
   static bool get isDarkTheme => sl<AppSharedPrefs>().getIsDarkTheme;
-  static void setDarkTheme(bool value) => sl<AppSharedPrefs>().setDarkTheme = value;
+  static void setDarkTheme(BuildContext context, bool value) {
+    sl<AppSharedPrefs>().setDarkTheme = value;
+    Provider.of<AppNotifierService>(context, listen: false).updateThemeTitle(value);
+  }
 
   /// Get and set dark mode
   static bool get isHaveSeenOnboarding => sl<AppSharedPrefs>().getOnBoarding;

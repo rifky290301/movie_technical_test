@@ -25,6 +25,7 @@ class FavoriteImplLocal extends AbstracFavoriteLocal {
         return favorites;
       }
     } catch (e) {
+      logger.warning('getFavoritesLocal $e');
       return [];
     }
     return [];
@@ -56,15 +57,14 @@ class FavoriteImplLocal extends AbstracFavoriteLocal {
 
   @override
   Future removeFavoritesLocal(String params) async {
-    List<Result> listMovie = await getFavoritesLocal();
-    logger.warning('beforeee listMovie ${listMovie.length}');
-
-    listMovie.removeWhere((e) => e.id.toString() == params);
-
-    logger.warning('removeee listMovie ${listMovie.length}');
-    unawaited(_preferences.setString(LocalStorageConstants.favoriteMovie, jsonEncode(listMovie)));
-    List<String> listIdFavorite = listMovie.map((e) => e.id.toString()).toList();
-    logger.warning('removeee listIdFavorite $listIdFavorite');
-    _preferences.setStringList(LocalStorageConstants.favoriteMovieId, listIdFavorite);
+    try {
+      List<Result> listMovie = await getFavoritesLocal();
+      listMovie.removeWhere((e) => e.id.toString() == params);
+      unawaited(_preferences.setString(LocalStorageConstants.favoriteMovie, jsonEncode(listMovie)));
+      List<String> listIdFavorite = listMovie.map((e) => e.id.toString()).toList();
+      _preferences.setStringList(LocalStorageConstants.favoriteMovieId, listIdFavorite);
+    } catch (e) {
+      logger.warning('removeFavoritesLocal  $e');
+    }
   }
 }

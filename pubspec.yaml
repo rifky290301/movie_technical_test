@@ -55,6 +55,9 @@ dependencies:
   # To Store Data In Local Storage
   shared_preferences: ^2.2.3
 
+  # unit test 
+  mockito: ^5.4.4
+
 
 dev_dependencies:
   flutter_test:
@@ -72,9 +75,33 @@ dev_dependencies:
   # Localization config
   flutter_localizations:
     sdk: flutter
+
+# Localization config
+flutter_intl:
+  main_locale: id
+  enabled: true
+  output_dir: lib/src/core/translations
+  arb_dir: lib/src/core/translations
+
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/images/
     - assets/images/logo/
+    - assets/images/undraw/
+
+
+  fonts:
+    - family: Mulish-Bold
+      fonts:
+        - asset: assets/fonts/Mulish-Bold.ttf
+    - family: Mulish-Medium
+      fonts:
+        - asset: assets/fonts/Mulish-Medium.ttf
+    - family: Mulish-Regular
+      fonts:
+        - asset: assets/fonts/Mulish-Regular.ttf
+    - family: Mulish-SemiBold
+      fonts:
+        - asset: assets/fonts/Mulish-SemiBold.ttf

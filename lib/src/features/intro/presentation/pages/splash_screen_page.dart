@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_technical_test/src/core/helper/helper.dart';
 import 'package:movie_technical_test/src/core/styles/app_colors.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/utils/constant/app_constants.dart';
@@ -19,7 +20,12 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      context.pushReplacement(AppRoute.onBoarding);
+      if (Helper.isHaveSeenOnboarding) {
+        context.pushReplacement(AppRoute.home);
+      } else {
+        context.pushReplacement(AppRoute.onBoarding);
+      }
+      // context.pushReplacement(AppRoute.onBoarding);
     });
   }
 

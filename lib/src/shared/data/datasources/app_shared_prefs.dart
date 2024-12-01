@@ -13,7 +13,7 @@ class AppSharedPrefs {
   //* ===============================================================
   LanguageEnum get getLang {
     String? data = _preferences.getString(LocalStorageConstants.lang);
-    if (data == null) return LanguageEnum.id;
+    if (data == null) return LanguageEnum.en;
     return LanguageEnum.values.firstWhere((element) => element.name == data);
   }
 

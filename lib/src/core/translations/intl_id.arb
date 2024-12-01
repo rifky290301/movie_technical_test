@@ -1,1 +1,8 @@
-{}
+{
+  "now_playing": "Sekarang Tayang",
+  "upcomming": "Segera",
+  "home": "Beranda",
+  "favorite": "Favorit",
+  "user": "Akun",
+  "empty_data": "Data Kosong"
+}

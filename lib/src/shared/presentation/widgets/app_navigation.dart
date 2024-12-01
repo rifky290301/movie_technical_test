@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_technical_test/src/core/translations/l10n.dart';
 
 import '../../../core/styles/app_colors.dart';
 import '../../../features/favorite/presentation/pages/favorite_page.dart';
@@ -27,14 +28,13 @@ class _AppNavigationState extends State<AppNavigation> {
     const ProfilePage(),
   ];
 
-  List<({String title, Icon icon})> navigationItem = [
-    (title: 'Home', icon: const Icon(Icons.home_rounded)),
-    (title: 'Favorite', icon: const Icon(Icons.favorite)),
-    (title: 'User', icon: const Icon(Icons.account_circle_rounded)),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<({String title, Icon icon})> navigationItem = [
+      (title: S.of(context).home, icon: const Icon(Icons.home_rounded)),
+      (title: S.of(context).favorite, icon: const Icon(Icons.favorite)),
+      (title: S.of(context).user, icon: const Icon(Icons.account_circle_rounded)),
+    ];
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -49,6 +49,7 @@ class _AppNavigationState extends State<AppNavigation> {
               type: BottomNavigationBarType.fixed,
               selectedItemColor: AppColors.primary,
               unselectedItemColor: Colors.grey,
+              backgroundColor: Colors.black.withOpacity(.1),
               onTap: _onItemTapped,
               showUnselectedLabels: true,
               items: navigationItem.map(

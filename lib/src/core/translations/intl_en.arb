@@ -1,1 +1,8 @@
-{}
+{
+  "now_playing": "Now Playing",
+  "upcomming": "Upcomming",
+  "home": "Home",
+  "favorite": "Favorite",
+  "user": "User",
+  "empty_data": "Empty Data"
+}

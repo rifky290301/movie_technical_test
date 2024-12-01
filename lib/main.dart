@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_technical_test/src/core/router/app_page.dart';
+import 'package:movie_technical_test/src/core/translations/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'src/core/helper/helper.dart';
@@ -79,7 +80,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             locale: locale,
             localizationsDelegates: const [
-              // S.delegate,
+              S.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,

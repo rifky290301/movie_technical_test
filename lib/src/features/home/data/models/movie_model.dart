@@ -99,7 +99,7 @@ class Result extends Equatable {
   final String? backdropPath;
   final List<int>? genreIds;
   final int? id;
-  final OriginalLanguage? originalLanguage;
+  final String? originalLanguage;
   final String? originalTitle;
   final String? overview;
   final double? popularity;
@@ -132,7 +132,7 @@ class Result extends Equatable {
     String? backdropPath,
     List<int>? genreIds,
     int? id,
-    OriginalLanguage? originalLanguage,
+    String? originalLanguage,
     String? originalTitle,
     String? overview,
     double? popularity,
@@ -165,7 +165,7 @@ class Result extends Equatable {
         backdropPath: json["backdrop_path"],
         genreIds: json["genre_ids"] == null ? [] : List<int>.from(json["genre_ids"]!.map((x) => x)),
         id: json["id"],
-        // originalLanguage: originalLanguageValues.map[json["original_language"]]!,
+        originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
@@ -182,7 +182,7 @@ class Result extends Equatable {
         "backdrop_path": backdropPath,
         "genre_ids": genreIds == null ? [] : List<dynamic>.from(genreIds!.map((x) => x)),
         "id": id,
-        "original_language": originalLanguageValues.reverse[originalLanguage],
+        "original_language": originalLanguage,
         "original_title": originalTitle,
         "overview": overview,
         "popularity": popularity,
@@ -212,21 +212,4 @@ class Result extends Equatable {
         voteAverage,
         voteCount
       ];
-}
-
-enum OriginalLanguage { EN, FR, JA, TE }
-
-final originalLanguageValues =
-    EnumValues({"en": OriginalLanguage.EN, "fr": OriginalLanguage.FR, "ja": OriginalLanguage.JA, "te": OriginalLanguage.TE});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
