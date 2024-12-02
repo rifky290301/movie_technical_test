@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_technical_test/main.dart';
-import 'package:movie_technical_test/src/core/helper/ui_theme_extention.dart';
-import 'package:movie_technical_test/src/core/translations/l10n.dart';
-import 'package:movie_technical_test/src/shared/presentation/widgets/app_loading.dart';
+
 import '../../../../core/helper/datetime_format.dart';
+import '../../../../core/helper/ui_theme_extention.dart';
 import '../../../../core/router/app_routes.dart';
+import '../../../../core/translations/l10n.dart';
 import '../../../../core/utils/constant/app_constants.dart';
 import '../../../../core/utils/injections.dart';
-import '../../../../core/utils/log/app_logger.dart';
+import '../../../../shared/presentation/widgets/app_loading.dart';
+import '../../../../shared/presentation/widgets/input_decoration_custom.dart';
+import '../../../home/data/models/movie_model.dart';
 import '../../domain/usecases/get_favorites_local_usecase.dart';
 import '../../domain/usecases/get_list_id_favorite_usecase.dart';
 import '../../domain/usecases/remove_favorite_local_usecase.dart';
 import '../bloc/favorite_bloc.dart';
-import '../../../home/data/models/movie_model.dart';
-import '../../../../shared/presentation/widgets/input_decoration_custom.dart';
 
 part '../widgets/movie_card.dart';
 

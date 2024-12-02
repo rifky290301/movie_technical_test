@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:movie_technical_test/src/core/utils/log/app_logger.dart';
-import '../../models/detail_movie_model.dart';
-import '../../models/search_movie_model.dart';
-import 'abstrac_home_api.dart';
-import '../../models/movie_model.dart';
 
 import '../../../../../core/network/error/dio_error_handler.dart';
 import '../../../../../core/network/error/exceptions.dart';
+import '../../models/detail_movie_model.dart';
+import '../../models/movie_model.dart';
+import '../../models/search_movie_model.dart';
+import 'abstrac_home_api.dart';
 
 class HomeImplApi extends AbstracHomeApi {
   final Dio dio;
@@ -14,21 +13,17 @@ class HomeImplApi extends AbstracHomeApi {
   HomeImplApi(this.dio);
 
   @override
-  Future<MovieModel> getMoviesNowPlaying(String params) async {
+  Future<List<Genre>> getAllGenre() async {
     try {
-      final Response result = await dio.get(
-        '/movie/now_playing',
-        queryParameters: {
-          'language': 'en-US',
-          'page': params,
-        },
+      final result = await dio.get(
+        '/genre/movie/list',
       );
-      MovieModel? movieModel;
+      List<Genre> genres = [];
       if (result.data != null) {
-        final data = result.data as Map<String, dynamic>;
-        movieModel = MovieModel.fromJson(data);
+        final json = result.data['genres'];
+        genres = json == null ? [] : List<Genre>.from(json!.map((x) => Genre.fromJson(x)));
       }
-      return movieModel ?? const MovieModel();
+      return genres;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.cancel) {
         throw CancelTokenException(handleDioError(e), e.response?.statusCode);
@@ -68,22 +63,21 @@ class HomeImplApi extends AbstracHomeApi {
   }
 
   @override
-  Future<MovieModel> getSearchMovies(SearchMovieModel params) async {
+  Future<MovieModel> getMoviesNowPlaying(String params) async {
     try {
-      final result = await dio.get(
-        '/${params.genre == null ? 'search' : 'discover'}/movie',
+      final Response result = await dio.get(
+        '/movie/now_playing',
         queryParameters: {
-          'query': params.query,
-          'page': params.page,
-          'with_genres': params.genre?.map((e) => '$e').toList(),
+          'language': 'en-US',
+          'page': params,
         },
       );
-      var movieModel = const MovieModel();
+      MovieModel? movieModel;
       if (result.data != null) {
         final data = result.data as Map<String, dynamic>;
         movieModel = MovieModel.fromJson(data);
       }
-      return movieModel;
+      return movieModel ?? const MovieModel();
     } on DioException catch (e) {
       if (e.type == DioExceptionType.cancel) {
         throw CancelTokenException(handleDioError(e), e.response?.statusCode);
@@ -127,17 +121,22 @@ class HomeImplApi extends AbstracHomeApi {
   }
 
   @override
-  Future<List<Genre>> getAllGenre() async {
+  Future<MovieModel> getSearchMovies(SearchMovieModel params) async {
     try {
       final result = await dio.get(
-        '/genre/movie/list',
+        '/${params.genre == null ? 'search' : 'discover'}/movie',
+        queryParameters: {
+          'query': params.query,
+          'page': params.page,
+          'with_genres': params.genre?.map((e) => '$e').toList(),
+        },
       );
-      List<Genre> genres = [];
+      var movieModel = const MovieModel();
       if (result.data != null) {
-        final json = result.data['genres'];
-        genres = json == null ? [] : List<Genre>.from(json!.map((x) => Genre.fromJson(x)));
+        final data = result.data as Map<String, dynamic>;
+        movieModel = MovieModel.fromJson(data);
       }
-      return genres;
+      return movieModel;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.cancel) {
         throw CancelTokenException(handleDioError(e), e.response?.statusCode);

@@ -12,27 +12,6 @@ import 'app_routes.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
-  // refreshListenable: authService, // Refresh saat status login berubah
-  // redirect: (context, state) {
-  //   logger.info('-------------> ${state.matchedLocation}');
-  //   if (state.matchedLocation != '/' && state.matchedLocation != AppRoute.onBoarding) {
-  //     final isLogin = authService.isLoggedIn;
-  //     final isLocationLoginPage = state.matchedLocation == AppRoute.login;
-  //     final isLocationRegisterPage = state.matchedLocation == AppRoute.register;
-
-  //     // Jika belum login dan rute di register
-  //     if (!isLogin && isLocationRegisterPage) return AppRoute.register;
-
-  //     // Jika belum login dan bukan di halaman login, arahkan ke /login
-  //     if (!isLogin && !isLocationLoginPage) return AppRoute.login;
-
-  //     // Jika sudah login dan mencoba ke /login, arahkan ke home
-  //     if (isLogin && isLocationLoginPage) return AppRoute.home;
-
-  //     return null; // Tidak ada redirect
-  //   }
-  //   return null;
-  // },
   navigatorKey: navigatorKey,
   initialLocation: '/',
   routes: [

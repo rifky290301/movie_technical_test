@@ -1,54 +1,169 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movie_technical_test/src/core/utils/constant/network_constant.dart';
-import 'package:movie_technical_test/src/core/utils/log/app_logger.dart';
+import 'package:dio/dio.dart';
 import 'package:movie_technical_test/src/features/home/data/datasources/remote/abstrac_home_api.dart';
 import 'package:movie_technical_test/src/features/home/data/datasources/remote/home_impl_api.dart';
+import 'package:movie_technical_test/src/features/home/data/models/detail_movie_model.dart';
 import 'package:movie_technical_test/src/features/home/data/models/movie_model.dart';
+import 'package:movie_technical_test/src/features/home/data/models/search_movie_model.dart';
 
-@GenerateNiceMocks([MockSpec<HomeImplApi>(), MockSpec<Dio>()])
+@GenerateNiceMocks([MockSpec<AbstracHomeApi>(), MockSpec<Dio>()])
 import 'remote_movie_datasource_test.mocks.dart';
 
 void main() async {
-  var remoteDataSourcMovie = MockHomeImplApi();
+  var remoteDataSourcMovie = MockAbstracHomeApi();
   MockDio mockDio = MockDio();
+  var homeImplApi = HomeImplApi(mockDio);
   // mockDio.options.baseUrl = NetworkConstant.apiUrl;
-  mockDio.options.headers['Authorization'] = 'Bearer ${NetworkConstant.bearerToken}';
+  // mockDio.options.headers['Authorization'] = 'Bearer ${NetworkConstant.bearerToken}';
 
-  MovieModel movieModel = MovieModel.fromJson(fakeDataJson);
-  String urlGetMovieNowPlaying = "${NetworkConstant.apiUrl}/movie/now_playing";
+  MovieModel fakeMovieModel = MovieModel.fromJson(fakeMovieJson);
+  final json = fakeGenreJson['genres'];
+  List<Genre> fakeListGenre = json == null ? [] : List<Genre>.from(json!.map((x) => Genre.fromJson(x)));
+  String page = '1';
+  // String urlGetMovieNowPlaying = "${NetworkConstant.apiUrl}/movie/now_playing";
 
-  group('Remote Data Source Movie Impl', () {
+  group('MockAbstracHomeApi', () {
     group('getMoviesNowPlaying', () {
-      test('BERHASIL (200)', () async {
+      test('BERHASIL', () async {
         // Stub -> kondisi untuk kita palsukan
         // Proses stubbing
-        when(mockDio.get(urlGetMovieNowPlaying)).thenAnswer(
-          (_) async => Response(
-            data: fakeDataJson,
-            requestOptions: RequestOptions(
-              path: '${NetworkConstant.apiUrl}/movie/now_playing',
-            ),
-            statusCode: 200,
-          ),
+        when(remoteDataSourcMovie.getMoviesNowPlaying(page)).thenAnswer(
+          (_) async => fakeMovieModel,
         );
 
         try {
-          var respose = await remoteDataSourcMovie.getMoviesNowPlaying('1');
-          expect(respose, movieModel);
+          var respose = await remoteDataSourcMovie.getMoviesNowPlaying(page);
+          expect(respose, fakeMovieModel);
           // TESTING UNTUK KEBERHASILAN
         } catch (e) {
           // TIDAK MUNGKIN TERJADI ERROR
           fail("TIDAK MUNGKIN TERJADI");
         }
       });
+      test('GAGAL', () async {
+        // Stub -> kondisi untuk kita palsukan
+        // Proses stubbing
+        when(remoteDataSourcMovie.getMoviesNowPlaying(page)).thenThrow(Exception());
+
+        try {
+          await remoteDataSourcMovie.getMoviesNowPlaying(page);
+          // TIDAK MUNGKIN TERJADI ERROR
+          fail("TIDAK MUNGKIN TERJADI");
+        } catch (e) {
+          // TESTING UNTUK KEGAGALAN
+          expect(e, isException);
+        }
+      });
+    });
+    group('getSearchMovies', () {
+      test('BERHASIL', () async {
+        when(remoteDataSourcMovie.getSearchMovies(const SearchMovieModel())).thenAnswer(
+          (_) async => fakeMovieModel,
+        );
+
+        try {
+          var respose = await remoteDataSourcMovie.getSearchMovies(const SearchMovieModel());
+          expect(respose, fakeMovieModel);
+        } catch (e) {
+          fail("TIDAK MUNGKIN TERJADI");
+        }
+      });
+      test('GAGAL', () async {
+        when(remoteDataSourcMovie.getSearchMovies(const SearchMovieModel())).thenThrow(Exception());
+
+        try {
+          await remoteDataSourcMovie.getSearchMovies(const SearchMovieModel());
+          fail("TIDAK MUNGKIN TERJADI");
+        } catch (e) {
+          expect(e, isException);
+        }
+      });
+    });
+    group('getAllGenre', () {
+      test('BERHASIL', () async {
+        when(remoteDataSourcMovie.getAllGenre()).thenAnswer(
+          (_) async => fakeListGenre,
+        );
+
+        try {
+          var respose = await remoteDataSourcMovie.getAllGenre();
+          expect(respose, fakeListGenre);
+        } catch (e) {
+          fail("TIDAK MUNGKIN TERJADI");
+        }
+      });
+      test('GAGAL', () async {
+        when(remoteDataSourcMovie.getAllGenre()).thenThrow(Exception());
+        try {
+          await remoteDataSourcMovie.getAllGenre();
+          fail("TIDAK MUNGKIN TERJADI");
+        } catch (e) {
+          expect(e, isException);
+        }
+      });
     });
   });
+
+// ! YANG INI ERROR KARENA SAYA TIDAK BISA SET BEARER TOKEN
+  // group('Remote Data Source Movie Impl', () {
+  //   group('getMoviesNowPlaying', () {
+  //     test('BERHASIL (200)', () async {
+  //       // Stub -> kondisi untuk kita palsukan
+  //       // Proses stubbing
+  //       when(mockDio.get('${NetworkConstant.apiUrl}/movie/now_playing',
+  //           options: Options(headers: {
+  //             'Authorization': 'Bearer ${NetworkConstant.bearerToken}',
+  //           }))).thenAnswer(
+  //         (_) async => Response(
+  //           data: fakeMovieJson,
+  //           requestOptions: RequestOptions(
+  //             path: '${NetworkConstant.apiUrl}/movie/now_playing',
+  //           ),
+  //           statusCode: 200,
+  //         ),
+  //       );
+
+  //       try {
+  //         var respose = await homeImplApi.getMoviesNowPlaying(page);
+  //         expect(respose, fakeMovieModel);
+  //         // TESTING UNTUK KEBERHASILAN
+  //       } catch (e) {
+  //         // TIDAK MUNGKIN TERJADI ERROR
+  //         fail("TIDAK MUNGKIN TERJADI");
+  //       }
+  //     });
+  //   });
+  // });
 }
 
-Map<String, dynamic> fakeDataJson = {
+Map<String, dynamic> fakeGenreJson = {
+  "genres": [
+    {"id": 28, "name": "Action"},
+    {"id": 12, "name": "Adventure"},
+    {"id": 16, "name": "Animation"},
+    {"id": 35, "name": "Comedy"},
+    {"id": 80, "name": "Crime"},
+    {"id": 99, "name": "Documentary"},
+    {"id": 18, "name": "Drama"},
+    {"id": 10751, "name": "Family"},
+    {"id": 14, "name": "Fantasy"},
+    {"id": 36, "name": "History"},
+    {"id": 27, "name": "Horror"},
+    {"id": 10402, "name": "Music"},
+    {"id": 9648, "name": "Mystery"},
+    {"id": 10749, "name": "Romance"},
+    {"id": 878, "name": "Science Fiction"},
+    {"id": 10770, "name": "TV Movie"},
+    {"id": 53, "name": "Thriller"},
+    {"id": 10752, "name": "War"},
+    {"id": 37, "name": "Western"}
+  ]
+};
+
+Map<String, dynamic> fakeMovieJson = {
   "dates": {"maximum": "2024-12-04", "minimum": "2024-10-23"},
   "page": 1,
   "results": [

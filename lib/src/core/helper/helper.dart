@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:movie_technical_test/src/shared/services/app_notifier_service.dart';
+import '../../shared/services/app_notifier_service.dart';
 
 import '../../shared/data/datasources/app_shared_prefs.dart';
 import '../../shared/domain/entities/language_enum.dart';

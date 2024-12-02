@@ -2,8 +2,6 @@
 //
 //     final searchMovieModel = searchMovieModelFromJson(jsonString);
 
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 // SearchMovieModel searchMovieModelFromJson(String str) => SearchMovieModel.fromJson(json.decode(str));
@@ -29,6 +27,17 @@ class SearchMovieModel extends Equatable {
     this.year,
   });
 
+  @override
+  List<Object?> get props => [
+        query,
+        includeAdult,
+        primaryReleaseYear,
+        page,
+        genre,
+        region,
+        year,
+      ];
+
   SearchMovieModel copyWith({
     String? query,
     bool? includeAdult,
@@ -47,36 +56,4 @@ class SearchMovieModel extends Equatable {
         region: region ?? this.region,
         year: year ?? this.year,
       );
-
-  // factory SearchMovieModel.fromJson(Map<String, dynamic> json) => SearchMovieModel(
-  //       query: json["query"],
-  //       includeAdult: json["include_adult"],
-  //       primaryReleaseYear: json["primary_release_year"],
-  //       page: json["page"],
-  //       genre: json["genre"],
-  //       region: json["region"],
-  //       year: json["year"],
-  //     );
-
-  // Map<String, dynamic> toJson() => {
-  //       "query": query,
-  //       "include_adult": includeAdult,
-  //       "primary_release_year": primaryReleaseYear,
-  //       "page": page,
-  //       "genre": genre,
-  //       "region": region,
-  //       "year": year,
-  //     };
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [
-        query,
-        includeAdult,
-        primaryReleaseYear,
-        page,
-        genre,
-        region,
-        year,
-      ];
 }

@@ -40,7 +40,7 @@ class ContentTab extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is HomeLoading) return const AppLoading();
-              if (state is HomeFailure) return SvgPicture.asset('$assets/undraw/error.svg', height: 150);
+              if (state is HomeFailure) return AppError(onPressed: getData);
               return Stack(children: [
                 GridView.builder(
                   padding: const EdgeInsets.only(left: 8, right: 8, bottom: 64),

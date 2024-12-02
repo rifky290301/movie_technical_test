@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_technical_test/src/core/router/app_page.dart';
-import 'package:movie_technical_test/src/core/translations/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'src/core/helper/helper.dart';
+import 'src/core/router/app_page.dart';
 import 'src/core/styles/app_theme.dart';
+import 'src/core/translations/l10n.dart';
 import 'src/core/utils/injections.dart';
 import 'src/shared/domain/entities/language_enum.dart';
 import 'src/shared/services/app_notifier_service.dart';
@@ -44,26 +44,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldMessengerState> snackBarKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addObserver(this);
-
-    if (mounted) {
-      LanguageEnum newLocale = Helper.getLang;
-      setState(() {
-        locale = Locale(newLocale.name);
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AppNotifierService(),
@@ -93,5 +73,25 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
+    if (mounted) {
+      LanguageEnum newLocale = Helper.getLang;
+      setState(() {
+        locale = Locale(newLocale.name);
+      });
+    }
   }
 }

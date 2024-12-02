@@ -1,12 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/usecases/add_favorite_local_usecase.dart';
-import '../../domain/usecases/get_list_id_favorite_usecase.dart';
-import '../../domain/usecases/remove_favorite_local_usecase.dart';
+
 import '../../../../core/utils/usecase/usecase.dart';
 import '../../../home/data/models/movie_model.dart';
-
 import '../../domain/usecases/get_favorites_local_usecase.dart';
+import '../../domain/usecases/get_list_id_favorite_usecase.dart';
+import '../../domain/usecases/remove_favorite_local_usecase.dart';
 
 part 'favorite_event.dart';
 part 'favorite_state.dart';
@@ -47,6 +46,10 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     }
   }
 
+  _onSearchingEvent(GetSearchFavoriteMovieEvent event, Emitter<FavoriteState> emit) {
+    emit(FavoriteSearching(_runFilter(event.query)));
+  }
+
   _removeMoviesFavorite(RemoveFavoriteMovieEvent event, Emitter<FavoriteState> emit) async {
     emit(FavoriteLoading());
     try {
@@ -60,10 +63,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     } catch (e) {
       emit(FavoriteFailure(error: e.toString()));
     }
-  }
-
-  _onSearchingEvent(GetSearchFavoriteMovieEvent event, Emitter<FavoriteState> emit) {
-    emit(FavoriteSearching(_runFilter(event.query)));
   }
 
   // This function is called whenever the text field changes

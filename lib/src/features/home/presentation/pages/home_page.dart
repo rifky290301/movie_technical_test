@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_technical_test/src/core/translations/l10n.dart';
-import 'package:movie_technical_test/src/core/utils/log/app_logger.dart';
+import 'package:movie_technical_test/src/shared/presentation/widgets/app_error.dart';
 import 'package:movie_technical_test/src/shared/presentation/widgets/input_decoration_custom.dart';
 
 import '../../../../core/router/app_routes.dart';
@@ -55,64 +55,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final GlobalKey _keyTabBar1 = GlobalKey<_TabBarCustomState>();
   final GlobalKey _keyTabBar2 = GlobalKey<_TabBarCustomState>();
   final GlobalKey _categoryWidget = GlobalKey<_CategoryWidgetState>();
-
-  @override
-  void initState() {
-    super.initState();
-    bloc.add(const GetGenreHomeEvent());
-
-    _focusNode = FocusNode();
-    _textController = TextEditingController();
-
-    // Listener untuk perubahan teks
-    _textController.addListener(() {
-      if (_textController.text.isEmpty) return;
-      // Batalkan timer jika masih aktif
-      if (_debounce?.isActive ?? false) _debounce?.cancel();
-
-      // Set timer baru
-      _debounce = Timer(const Duration(milliseconds: 500), () {
-        _onTextChanged(_textController.text);
-      });
-    });
-
-    // Inisialisasi TabController
-    _tabController = TabController(length: 2, vsync: this);
-
-    // Listener untuk memantau perubahan tab
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        _keyTabBar1.currentState?.setState(() {});
-        _keyTabBar2.currentState?.setState(() {});
-      }
-    });
-  }
-
-  void _onTextChanged(String text) {
-    // Bersihkan genre yang terselect
-    if (listIdGenreSelected.isNotEmpty) {
-      listIdGenreSelected.clear();
-      _categoryWidget.currentState?.setState(() {});
-    }
-
-    setState(() {
-      _isSearchActive = true;
-      _isGenreActive = false;
-    });
-  }
-
-  void _onFilterWithGenre(List<int> value) {
-    _textController.clear();
-
-    listIdGenreSelected = value;
-    if (value.isEmpty) {
-      _isSearchActive = false;
-    } else {
-      _isSearchActive = true;
-    }
-    _isGenreActive = true;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,5 +169,63 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     _tabController.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    bloc.add(const GetGenreHomeEvent());
+
+    _focusNode = FocusNode();
+    _textController = TextEditingController();
+
+    // Listener untuk perubahan teks
+    _textController.addListener(() {
+      if (_textController.text.isEmpty) return;
+      // Batalkan timer jika masih aktif
+      if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+      // Set timer baru
+      _debounce = Timer(const Duration(milliseconds: 500), () {
+        _onTextChanged(_textController.text);
+      });
+    });
+
+    // Inisialisasi TabController
+    _tabController = TabController(length: 2, vsync: this);
+
+    // Listener untuk memantau perubahan tab
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        _keyTabBar1.currentState?.setState(() {});
+        _keyTabBar2.currentState?.setState(() {});
+      }
+    });
+  }
+
+  void _onFilterWithGenre(List<int> value) {
+    _textController.clear();
+
+    listIdGenreSelected = value;
+    if (value.isEmpty) {
+      _isSearchActive = false;
+    } else {
+      _isSearchActive = true;
+    }
+    _isGenreActive = true;
+    setState(() {});
+  }
+
+  void _onTextChanged(String text) {
+    // Bersihkan genre yang terselect
+    if (listIdGenreSelected.isNotEmpty) {
+      listIdGenreSelected.clear();
+      _categoryWidget.currentState?.setState(() {});
+    }
+
+    setState(() {
+      _isSearchActive = true;
+      _isGenreActive = false;
+    });
   }
 }
