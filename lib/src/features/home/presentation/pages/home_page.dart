@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_technical_test/src/core/translations/l10n.dart';
-import 'package:movie_technical_test/src/shared/presentation/widgets/app_error.dart';
-import 'package:movie_technical_test/src/shared/presentation/widgets/input_decoration_custom.dart';
+import '../../../../core/translations/l10n.dart';
+import '../../../../shared/presentation/widgets/app_error.dart';
+import '../../../../shared/presentation/widgets/input_decoration_custom.dart';
 
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/styles/app_colors.dart';

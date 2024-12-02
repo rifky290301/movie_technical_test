@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:movie_technical_test/src/core/utils/constant/network_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_technical_test/src/features/home/data/datasources/remote/abstrac_home_api.dart';
 import 'package:movie_technical_test/src/features/home/data/datasources/remote/home_impl_api.dart';
